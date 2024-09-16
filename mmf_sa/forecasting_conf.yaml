@@ -50,6 +50,7 @@ active_models:
   - NeuralForecastAutoNHITS
   - NeuralForecastAutoTiDE
   - NeuralForecastAutoPatchTST
+  - NeuralForecastInformer
   - ChronosT5Tiny
   - ChronosT5Mini
   - ChronosT5Small

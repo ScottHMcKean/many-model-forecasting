@@ -18,6 +18,7 @@ from neuralforecast.auto import (
     AutoNHITS,
     AutoTiDE,
     AutoPatchTST,
+    Informer
 )
 from neuralforecast.losses.pytorch import (
     MAE, MSE, RMSE, MAPE, SMAPE, MASE,
@@ -679,4 +680,36 @@ class NeuralFcAutoPatchTST(NeuralFcForecaster):
                 ),
             ],
             freq=self.params["freq"]
+        )
+
+class NeuralFcInformer(NeuralFcForecaster):
+    def __init__(self, params):
+        super().__init__(params)
+        self.params = params
+        self.loss = get_loss_function(self.params.loss)
+        self.accelerator = 'gpu' if self.params.accelerator == 'gpu' else 'cpu'
+        self.devices = -1 if self.params.accelerator == 'gpu' else 1
+        self.model = NeuralForecast(
+            models=[
+                Informer(
+                    h=self.params.prediction_length,
+                    input_size=self.params.input_size_factor*self.params.prediction_length,
+                    loss=self.loss,
+                    max_steps=self.params.max_steps,
+                    scaler_type='robust',
+                    batch_size=self.params.get('batch_size'),
+                    n_head=self.params.get('n_head'),
+                    decoder_input_size_multiplier=self.params.get('decoder_input_size_multipler'),
+                    hidden_size=self.params.get('hidden_size'),
+                    dropout=self.params.get('dropout'),
+                    learning_rate=self.params.get('learning_rate'),
+                    num_lr_decays=self.paramms.get('num_lr_decays'),
+                    early_stop_patience_steps=self.params.get('early_stop_patience_steps'),
+                    stat_exog_list=list(self.params.get("static_features", [])),
+                    futr_exog_list=list(self.params.get("dynamic_future", [])),
+                    hist_exog_list=list(self.params.get("dynamic_historical", [])),
+                    
+                )
+            ],
+            freq=self.params['freq']
         )

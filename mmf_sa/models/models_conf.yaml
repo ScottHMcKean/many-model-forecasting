@@ -336,6 +336,15 @@ models:
     scaler_type: [ "robust", "standard" ]
     revin: [ False, True ]
 
+  NeuralForecastInformer:
+    module: mmf_sa.models.neuralforecast.NeuralForecastPipeline
+    model_class: NeuralFcInformer
+    framework: NeuralForecast
+    model_type: global
+    max_steps: 500
+    num_samples: 20
+    batch_size: 32
+
   ChronosT5Tiny:
     module: mmf_sa.models.chronosforecast.ChronosPipeline
     model_class: ChronosT5Tiny

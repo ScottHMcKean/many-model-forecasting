@@ -132,6 +132,8 @@ active_models = [
     "NeuralForecastAutoNHITS",
     "NeuralForecastAutoTiDE",
     "NeuralForecastAutoPatchTST",
+    "NeuralForecastInformer",
+
 ]
 
 # COMMAND ----------
