@@ -341,6 +341,9 @@ models:
     model_class: NeuralFcInformer
     framework: NeuralForecast
     model_type: global
+    loss: smape
+    input_size_factor: 2
+    decoder_input_size_multiplier: 4
     max_steps: 500
     num_samples: 20
     batch_size: 32
